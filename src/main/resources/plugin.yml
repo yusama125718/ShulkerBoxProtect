@@ -1,0 +1,14 @@
+name: ShulkerBoxProtect
+version: '${project.version}'
+main: yusama125718.shulkerboxprotect.ShulkerBoxProtect
+api-version: 1.17
+authors: [ yusama125718 ]
+
+commands:
+  shulkerp:
+    description: ShulkerBoxProtect
+    usage: /shulkerpでコマンドを確認
+
+permissions:
+  shulkerp.op:
+    default: op
