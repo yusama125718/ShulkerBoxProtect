@@ -1,5 +1,6 @@
 package yusama125718.shulkerboxprotect;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class Event implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void PlaceShulker(BlockPlaceEvent e) {         //シュルカー設置
         if (!system) return;
         if (e.getBlockPlaced().getState() instanceof ShulkerBox shulker) {
@@ -33,7 +34,7 @@ public class Event implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void Interact(PlayerInteractEvent e) {         //シュルカーopen
         if (!system || !e.getAction().isRightClick() || e.getClickedBlock() == null) return;
         if (e.getClickedBlock().getState() instanceof ShulkerBox shulker){
@@ -41,7 +42,7 @@ public class Event implements Listener {
             LocalDateTime d = null;
             String s = shulker.getPersistentDataContainer().get(new NamespacedKey(shulkerp, "shulkerpDate"), PersistentDataType.STRING);
             d = LocalDateTime.parse(s);
-            if (ChronoUnit.MINUTES.between(d,LocalDateTime.now()) > time) return;
+            if (ChronoUnit.MINUTES.between(d,LocalDateTime.now()) >= time) return;
             if (!shulker.getPersistentDataContainer().get(new NamespacedKey(shulkerp, "shulkerp"), PersistentDataType.STRING).equals(e.getPlayer().getUniqueId().toString()) && !e.getPlayer().hasPermission("shulkerp.op")){
                 e.getPlayer().sendMessage("§9§l[ShulkerBoxProtect] §rこのシュルカーボックスはロックされています");
                 e.setCancelled(true);
@@ -49,7 +50,7 @@ public class Event implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void BreakShulker(BlockBreakEvent e){
         if (!system) return;
         if (e.getBlock().getState() instanceof ShulkerBox shulker){
@@ -57,7 +58,7 @@ public class Event implements Listener {
             LocalDateTime d = null;
             String s = shulker.getPersistentDataContainer().get(new NamespacedKey(shulkerp, "shulkerpDate"), PersistentDataType.STRING);
             d = LocalDateTime.parse(s);
-            if (ChronoUnit.MINUTES.between(d,LocalDateTime.now()) > time) return;
+            if (ChronoUnit.MINUTES.between(d,LocalDateTime.now()) >= time) return;
             if (!shulker.getPersistentDataContainer().get(new NamespacedKey(shulkerp, "shulkerp"), PersistentDataType.STRING).equals(e.getPlayer().getUniqueId().toString()) && !e.getPlayer().hasPermission("shulkerp.op")){
                 e.getPlayer().sendMessage("§9§l[ShulkerBoxProtect] §rこのシュルカーボックスはロックされています");
                 e.setCancelled(true);
@@ -74,6 +75,7 @@ public class Event implements Listener {
             ShulkerBox box = (ShulkerBox) bsm.getBlockState();
             box.getInventory().setContents(shulker.getInventory().getContents());
             bsm.setBlockState(box);
+            bsm.displayName(Component.text(shulker.getCustomName()));
             box.update();
             item.setItemMeta(bsm);
             e.getPlayer().getInventory().addItem(item);

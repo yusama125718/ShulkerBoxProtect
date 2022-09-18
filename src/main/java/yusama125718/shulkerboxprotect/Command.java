@@ -36,6 +36,7 @@ public class Command implements CommandExecutor, TabCompleter {
                     shulkerp.getConfig().set("system",system);
                     shulkerp.saveConfig();
                     sender.sendMessage("§9§l[ShulkerBoxProtect] §ronにしました");
+                    return true;
                 }
                 else if (args[0].equals("off")){
                     if (!system){
@@ -46,6 +47,7 @@ public class Command implements CommandExecutor, TabCompleter {
                     shulkerp.getConfig().set("system",system);
                     shulkerp.saveConfig();
                     sender.sendMessage("§9§l[ShulkerBoxProtect] §roffにしました");
+                    return true;
                 }
                 else{
                     sender.sendMessage("§9§l[ShulkerBoxProtect] §7/shulkerpでコマンドを確認");
@@ -63,6 +65,7 @@ public class Command implements CommandExecutor, TabCompleter {
                     shulkerp.getConfig().set("time",time);
                     shulkerp.saveConfig();
                     sender.sendMessage("§9§l[ShulkerBoxProtect] §r設定しました");
+                    return true;
                 }
                 else{
                     sender.sendMessage("§9§l[ShulkerBoxProtect] §7/shulkerpでコマンドを確認");
