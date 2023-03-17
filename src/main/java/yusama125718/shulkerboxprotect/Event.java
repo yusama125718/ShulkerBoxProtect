@@ -75,7 +75,7 @@ public class Event implements Listener {
             ShulkerBox box = (ShulkerBox) bsm.getBlockState();
             box.getInventory().setContents(shulker.getInventory().getContents());
             bsm.setBlockState(box);
-            bsm.displayName(Component.text(shulker.getCustomName()));
+            if (shulker.getCustomName() != null) bsm.displayName(Component.text(shulker.getCustomName()));
             box.update();
             item.setItemMeta(bsm);
             e.getPlayer().getInventory().addItem(item);

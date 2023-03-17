@@ -1,5 +1,5 @@
 name: ShulkerBoxProtect
-version: '${project.version}'
+version: '1.0'
 main: yusama125718.shulkerboxprotect.ShulkerBoxProtect
 api-version: 1.19
 
